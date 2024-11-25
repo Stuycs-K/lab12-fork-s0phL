@@ -5,6 +5,7 @@
 #include <sys/wait.h>
 
 int main() {
+  printf("%d about to create 2 child processes", getpid());
   pid_t p = fork();
   if (p < 0) {
     perror("fork failed");
