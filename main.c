@@ -23,7 +23,7 @@ int main() {
   printf("%d about to create 2 child processes\n", getpid());
   pid_t p1 = fork();
   if (p1 < 0) {
-    perror("fork failed");
+    perror("child 1 fork failed");
     exit(1);
   }
   else if (p1 == 0) {
@@ -33,7 +33,7 @@ int main() {
   else {
     pid_t p2 = fork();
     if (p2 < 0) {
-      perror("fork failed");
+      perror("child 2 fork failed");
       exit(1);
     }
     else if (p2 == 0) {
