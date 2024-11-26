@@ -6,7 +6,7 @@
 
 int child_process() {
   unsigned int random_num;
-  int fd = open("/dev/random", O_RDONLY);
+  int fd = open("/dev/urandom", O_RDONLY);
   if (fd == -1) {
     perror("failed to open dev random");
     exit(1);
