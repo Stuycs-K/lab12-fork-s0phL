@@ -44,7 +44,7 @@ int main() {
       int status;
       int child_pid = wait(&status);
       if (WIFEXITED(status)) {
-        printf("Main Process %d is done. Child %d slept for %d sec\n", getpid(), child_pid, WEXITSTATUS(status));
+        printf("Main Process %d is done. Child %d slept for %dsec\n", getpid(), child_pid, WEXITSTATUS(status));
       }
     }
 
