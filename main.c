@@ -15,7 +15,7 @@ int child_process() {
   random_num = (random_num % 5) + 1;
   printf("%d %dsec\n", getpid(), random_num);
   sleep(random_num);
-  printf("%d finished after %d seconds\n", getpid(), random_num);
+  printf("%d finished after %dsec\n", getpid(), random_num);
   return random_num;
 }
 
