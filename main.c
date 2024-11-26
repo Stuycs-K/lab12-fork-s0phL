@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-void child_process() {
+int child_process() {
   unsigned int random_num;
   int fd = open("/dev/random", O_RDONLY);
   if (fd == -1) {
@@ -12,11 +12,11 @@ void child_process() {
     exit(1);
   }
   read(fd, &random_num, sizeof(random_num));
-  random_num %= (5 + 1);
+  random_num = (random_num % 5) + 1;
   printf("%d %dsec\n", getpid(), random_num);
   sleep(random_num);
   printf("%d finished after %d seconds\n", getpid(), random_num);
-  exit(0);
+  return random_num;
 }
 
 int main() {
@@ -27,19 +27,25 @@ int main() {
     exit(1);
   }
   else if (p1 == 0) {
-    child_process();
+    int time_waited = child_process();
+    return time_waited;
   }
   else {
     pid_t p2 = fork();
-    if (p1 < 0) {
+    if (p2 < 0) {
       perror("fork failed");
       exit(1);
     }
     else if (p2 == 0) {
-      child_process();
+      int time_waited = child_process();
+      return time_waited;
     }
     else {
-
+      int status;
+      int child_pid = wait(&status);
+      if (WIFEXITED(status)) {
+        printf("Main Process %d is done. Child %d slept for %d sec\n", getpid(), child_pid, WEXITSTATUS(status));
+      }
     }
 
   }
